@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>山风传媒 · 专业视频内容制作</title>
+<style>
+  /* ---------- 基础变量 ---------- */
+  :root{
+    --bg:        #0b0d10;
+    --bg-2:      #0f1217;
+    --surface:   #12161c;
+    --border:    rgba(255,255,255,.08);
+    --border-2:  rgba(255,255,255,.14);
+    --text:      #e9edf3;
+    --muted:     #8a94a3;
+    --muted-2:   #6b7482;
+    --c1:        #5b8cff;
+    --c2:        #22d3ee;
+    --radius:    18px;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+
+  button{ font-family:inherit; }
+
+  .wrap{
+    width:100%;
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  .grad{
+    background:linear-gradient(92deg, #7aa2ff 0%, #22d3ee 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  /* ---------- 顶部导航 ---------- */
+  .nav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(11,13,16,.78);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+
+  .nav-inner{
+    height:68px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+  }
+
+  .logo{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-size:17px;
+    font-weight:700;
+    letter-spacing:.02em;
+  }
+
+  .logo-mark{
+    width:22px;
+    height:22px;
+    border-radius:7px;
+    background:linear-gradient(135deg, var(--c1), var(--c2));
+    box-shadow:0 0 22px rgba(91,140,255,.45);
+    position:relative;
+    flex:none;
+  }
+
+  .logo-mark::after{
+    content:"";
+    position:absolute;
+    inset:6px;
+    border-radius:3px;
+    background:rgba(11,13,16,.9);
+  }
+
+  /* 右上角两个入口 */
+  .nav-actions{
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+
+  .nav-actions button{
+    font-size:14.5px;
+    padding:9px 20px;
+    border-radius:10px;
+    cursor:pointer;
+    color:var(--text);
+    background:transparent;
+    border:1px solid var(--border-2);
+    transition:border-color .2s, background .2s, filter .2s, transform .12s;
+  }
+
+  .nav-actions button:hover{
+    border-color:rgba(91,140,255,.6);
+    background:rgba(91,140,255,.1);
+  }
+
+  .nav-actions button.primary{
+    color:#06121c;
+    font-weight:650;
+    border-color:transparent;
+    background:linear-gradient(92deg, #6f9bff, #2fd8ef);
+  }
+
+  .nav-actions button.primary:hover{
+    filter:brightness(1.08);
+    background:linear-gradient(92deg, #6f9bff, #2fd8ef);
+  }
+
+  .nav-actions button:active{ transform:translateY(1px); }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    padding:120px 0 104px;
+  }
+
+  .hero::before{
+    content:"";
+    position:absolute;
+    left:-10%;
+    right:-10%;
+    top:-40%;
+    height:760px;
+    background:
+      radial-gradient(52% 58% at 26% 42%, rgba(91,140,255,.20), transparent 68%),
+      radial-gradient(46% 52% at 78% 26%, rgba(34,211,238,.13), transparent 68%);
+    pointer-events:none;
+  }
+
+  .hero::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px);
+    background-size:64px 64px;
+    -webkit-mask-image:radial-gradient(72% 64% at 50% 20%, #000 0%, transparent 76%);
+    mask-image:radial-gradient(72% 64% at 50% 20%, #000 0%, transparent 76%);
+    pointer-events:none;
+  }
+
+  .hero-inner{
+    position:relative;
+    z-index:1;
+    max-width:860px;
+    margin:0 auto;
+    text-align:center;
+  }
+
+  .eyebrow{
+    display:inline-block;
+    font-size:16.5px;
+    letter-spacing:.14em;
+    color:var(--c2);
+    border:1px solid rgba(34,211,238,.28);
+    background:rgba(34,211,238,.06);
+    padding:5px 14px;
+    border-radius:999px;
+    margin-bottom:28px;
+  }
+
+  .hero h1{
+    margin:0 0 24px;
+    font-size:clamp(36px, 5vw, 58px);
+    line-height:1.14;
+    letter-spacing:-.02em;
+    font-weight:700;
+  }
+
+  .lead{
+    margin:0 auto;
+    max-width:660px;
+    font-size:16.5px;
+    color:var(--muted);
+    line-height:1.85;
+  }
+
+  .hero-meta{
+    display:flex;
+    justify-content:center;
+    gap:56px;
+    margin-top:52px;
+    padding-top:32px;
+    border-top:1px solid var(--border);
+    flex-wrap:wrap;
+  }
+
+
+  .hero-meta p{
+    font-size:15.5px;
+    color:var(--muted-2);
+  }
+
+  /* ---------- 通用区块 ---------- */
+  .section{ padding:96px 0; }
+
+  .section-head{
+    max-width:720px;
+    margin-bottom:52px;
+  }
+
+  .section-head .tag{
+    display:block;
+    font-size:13px;
+    letter-spacing:.14em;
+    color:var(--muted-2);
+    margin-bottom:16px;
+  }
+
+  .section-head h2{
+    margin:0 0 16px;
+    font-size:clamp(26px, 3vw, 36px);
+    line-height:1.28;
+    letter-spacing:-.015em;
+    font-weight:700;
+  }
+
+  .section-head p{
+    margin:0;
+    font-size:15.5px;
+    color:var(--muted);
+    line-height:1.85;
+  }
+
+  /* ---------- 能力卡片 ---------- */
+  .grid-cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+    gap:24px;
+  }
+
+  .card{
+    position:relative;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:32px 28px;
+    transition:border-color .25s, transform .25s, background .25s;
+  }
+
+  .card:hover{
+    border-color:rgba(91,140,255,.35);
+    background:#141922;
+    transform:translateY(-3px);
+  }
+
+  .card-icon{
+    width:44px;
+    height:44px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#8fb4ff;
+    background:rgba(91,140,255,.1);
+    border:1px solid rgba(91,140,255,.2);
+    margin-bottom:24px;
+  }
+
+  .card-icon svg{ width:22px; height:22px; }
+
+  .card h3{
+    margin:0 0 18px;
+    font-size:19px;
+    font-weight:650;
+    letter-spacing:-.01em;
+  }
+
+  .card ul{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:grid;
+    gap:13px;
+  }
+
+  .card li{
+    position:relative;
+    padding-left:18px;
+    font-size:14.5px;
+    line-height:1.72;
+    color:var(--muted);
+  }
+
+  .card li::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:9px;
+    width:6px;
+    height:6px;
+    border-radius:2px;
+    background:linear-gradient(135deg, var(--c1), var(--c2));
+  }
+
+  /* ---------- 优势 ---------- */
+  .adv-section{
+    border-top:1px solid var(--border);
+    background:
+      radial-gradient(60% 70% at 50% 0%, rgba(91,140,255,.07), transparent 70%),
+      var(--bg-2);
+  }
+
+  .grid-adv{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+    gap:24px;
+  }
+
+  .adv{
+    background:rgba(255,255,255,.02);
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:30px 26px;
+    transition:border-color .25s, background .25s;
+  }
+
+  .adv:hover{
+    border-color:var(--border-2);
+    background:rgba(255,255,255,.035);
+  }
+
+  .adv .num{
+    display:block;
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:.18em;
+    color:var(--c2);
+    margin-bottom:18px;
+  }
+
+  .adv h3{
+    margin:0 0 12px;
+    font-size:17.5px;
+    font-weight:650;
+    letter-spacing:-.01em;
+  }
+
+  .adv p{
+    margin:0;
+    font-size:14px;
+    line-height:1.8;
+    color:var(--muted);
+  }
+
+  /* ---------- 页脚 ---------- */
+  .footer{
+    border-top:1px solid var(--border);
+    padding:44px 0;
+    background:var(--bg);
+  }
+
+  .footer-inner{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:24px;
+    flex-wrap:wrap;
+    font-size:13.5px;
+    color:var(--muted-2);
+  }
+
+  .footer a{ color:var(--muted); transition:color .2s; }
+  .footer a:hover{ color:var(--text); }
+
+  .footer-link{
+    padding:0;
+    font:inherit;
+    font-size:13.5px;
+    color:var(--muted);
+    background:none;
+    border:0;
+    cursor:pointer;
+    transition:color .2s;
+  }
+
+  .footer-link:hover{
+    color:var(--text);
+  }
+  .footer-brand{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    font-size:15px;
+    font-weight:700;
+    color:var(--text);
+    margin-bottom:10px;
+  }
+
+  .footer-brand .logo-mark{ width:18px; height:18px; border-radius:6px; }
+  .footer-brand .logo-mark::after{ inset:5px; border-radius:2px; }
+
+  /* ---------- 弹窗 ---------- */
+  dialog.modal{
+    width:min(500px, calc(100vw - 40px));
+    max-width:none;
+    max-height:90vh;
+    padding:0;
+    border:1px solid var(--border-2);
+    border-radius:20px;
+    color:var(--text);
+    background:linear-gradient(180deg, #161b23 0%, #101419 100%);
+    box-shadow:0 40px 100px -34px rgba(0,0,0,.95);
+    overflow:auto;
+  }
+
+  dialog.modal::backdrop{
+    background:rgba(5,7,10,.72);
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+  }
+
+  dialog.modal[open]{
+    animation:modalIn .22s cubic-bezier(.2,.8,.3,1);
+  }
+
+  @keyframes modalIn{
+    from{ opacity:0; transform:translateY(12px) scale(.98); }
+    to{   opacity:1; transform:none; }
+  }
+
+  .modal-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:24px 26px 0;
+  }
+
+  .modal-head h2{
+    margin:0;
+    font-size:19px;
+    font-weight:650;
+    letter-spacing:-.01em;
+  }
+
+  .modal-close{
+    width:32px;
+    height:32px;
+    flex:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+    line-height:1;
+    color:var(--muted);
+    background:transparent;
+    border:1px solid var(--border);
+    border-radius:9px;
+    cursor:pointer;
+    transition:color .2s, border-color .2s, background .2s;
+  }
+
+  .modal-close:hover{
+    color:var(--text);
+    border-color:var(--border-2);
+    background:rgba(255,255,255,.05);
+  }
+
+  .modal-body{ padding:22px 26px 28px; }
+
+  /* 表单 */
+  .field{
+    display:block;
+    margin-bottom:16px;
+  }
+
+  .field span{
+    display:block;
+    font-size:13px;
+    color:var(--muted);
+    margin-bottom:8px;
+  }
+
+  .field input{
+    width:100%;
+    height:46px;
+    padding:0 14px;
+    font-size:14.5px;
+    font-family:inherit;
+    color:var(--text);
+    background:#0c0f14;
+    border:1px solid var(--border);
+    border-radius:11px;
+    outline:none;
+    transition:border-color .2s, box-shadow .2s, background .2s;
+  }
+
+  .field input::placeholder{ color:#4d5563; }
+
+  .field input:focus{
+    border-color:rgba(91,140,255,.75);
+    background:#0d1117;
+    box-shadow:0 0 0 3px rgba(91,140,255,.13);
+  }
+
+  .btn-submit{
+    width:100%;
+    height:46px;
+    margin-top:8px;
+    border:0;
+    border-radius:11px;
+    font-size:15px;
+    font-weight:650;
+    letter-spacing:.02em;
+    color:#06121c;
+    background:linear-gradient(92deg, #6f9bff, #2fd8ef);
+    cursor:pointer;
+    transition:filter .2s, transform .12s, opacity .2s;
+  }
+
+  .btn-submit:hover{ filter:brightness(1.08); }
+  .btn-submit:active{ transform:translateY(1px); }
+  .btn-submit:disabled{ opacity:.6; cursor:default; transform:none; }
+
+  .login-hint{
+    margin:20px 0 0;
+    font-size:13.5px;
+    color:var(--muted-2);
+    text-align:center;
+  }
+
+  .login-hint a{
+    color:var(--c2);
+    border-bottom:1px solid rgba(34,211,238,.35);
+    padding-bottom:1px;
+    transition:color .2s, border-color .2s;
+  }
+
+  .login-hint a:hover{
+    color:#67e8f9;
+    border-color:rgba(103,232,249,.9);
+  }
+
+  .login-note{
+    display:none;
+    margin:14px 0 0;
+    padding:10px 12px;
+    font-size:13px;
+    line-height:1.6;
+    color:#9fd8ff;
+    background:rgba(91,140,255,.09);
+    border:1px solid rgba(91,140,255,.22);
+    border-radius:10px;
+    text-align:center;
+  }
+
+  .login-note.show{ display:block; }
+
+  .qr-wrap{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    padding:16px;
+    border:1px solid var(--border);
+    border-radius:14px;
+    background:rgba(255,255,255,.02);
+  }
+
+  .qr-box{
+    flex:none;
+    width:164px;         /* 原来是 104px，约 1.6 倍宽 */
+    height:208px;        /* 原来是 104px，翻倍高，匹配图片 925:1182 */
+    padding:6px;
+    border-radius:10px;
+    background:#fff;
+  }
+
+  .qr-box img{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:contain;
+  }
+
+  .qr-text strong{
+    display:block;
+    font-size:14.5px;
+    font-weight:650;
+    margin-bottom:6px;
+  }
+
+  .qr-text span{
+    font-size:12.5px;
+    line-height:1.7;
+    color:var(--muted-2);
+  }
+
+  /* ---------- 响应式 ---------- */
+  @media (max-width:1024px){
+    .hero{ padding:92px 0 82px; }
+    .hero-meta{ gap:40px; }
+  }
+
+  @media (max-width:640px){
+    .wrap{ padding:0 20px; }
+    .nav-inner{ height:62px; }
+    .logo{ font-size:16px; }
+    .nav-actions{ gap:8px; }
+    .nav-actions button{ padding:8px 14px; font-size:13.5px; }
+
+    .hero{ padding:68px 0 62px; }
+    .hero-meta{ gap:26px; margin-top:40px; }
+    .hero-meta strong{ font-size:16px; }
+
+    .section{ padding:68px 0; }
+    .section-head{ margin-bottom:38px; }
+
+    .card{ padding:28px 22px; }
+    .modal-head{ padding:20px 20px 0; }
+    .modal-body{ padding:20px 20px 24px; }
+    .qr-wrap{ gap:14px; padding:14px; }
+    .qr-box{ width:92px; height:92px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ======== 顶部导航 ======== -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="logo" href="#top">
+      <img src="images/logo.png" width=auto height="50px" alt="山风传媒">
+      <!-- <span class="logo-mark"></span>
+      <span>山风传媒</span> -->
+    </a>
+
+    <div class="nav-actions">
+      <button type="button" data-open="contactModal">联系我们</button>
+      <button type="button" class="primary" data-open="loginModal">登录</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ======== Hero ======== -->
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <span class="eyebrow">山风传媒 · 专业视频内容制作</span>
+
+      <h1>让好创意快速成片<br><span class="grad">专业团队，高效交付，品质可控</span></h1>
+
+      <p class="lead">
+        山风传媒专注于短剧、电商与品牌广告视频制作，从创意策划、脚本分镜到成片交付，
+        为品牌提供稳定、高效、可规模化的内容生产能力。
+      </p>
+
+      <div class="hero-meta">
+        <div>
+          <h2>全流程服务</h2>
+          <p>策划到成片</p>
+        </div>
+        <div>
+          <h2>系列化生产</h2>
+          <p>批量内容交付</p>
+        </div>
+        <div>
+          <h2>多语种支持</h2>
+          <p>国内外平台适配</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== 核心能力 ======== -->
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="tag">核心能力</span>
+        <h2>覆盖主流内容生产场景</h2>
+        <p>一套成熟的视频制作工作流，同时服务短剧、电商与品牌广告三大业务方向。</p>
+      </div>
+
+      <div class="grid-cards">
+
+        <!-- 短剧制作 -->
+        <article class="card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2.5" y="4.5" width="19" height="15" rx="3"/>
+              <path d="M2.5 9.5h19M7.5 4.5v5M16.5 4.5v5"/>
+              <path d="M10 13.2l4.2 2.3-4.2 2.3z" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <h3>短剧制作</h3>
+          <ul>
+            <li>从剧本解析、分镜拆解到画面提示词，快速进入制作流程</li>
+            <li>统一角色、道具与场景设定，多集内容保持视觉一致</li>
+            <li>支持系列化、批量化生产，提升短剧项目交付效率</li>
+          </ul>
+        </article>
+
+        <!-- 电商内容 -->
+        <article class="card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5.5 8h13l1.2 11.5H4.3L5.5 8z"/>
+              <path d="M9 8a3 3 0 0 1 6 0"/>
+            </svg>
+          </div>
+          <h3>电商内容</h3>
+          <ul>
+            <li>AI 数字人、AI 模特完成口播、展示及种草内容</li>
+            <li>一套内容框架可适配多个 SKU，降低重复制作成本</li>
+            <li>支持多语种内容制作，满足国内及海外平台发布需求</li>
+          </ul>
+        </article>
+
+        <!-- 品牌广告 -->
+        <article class="card">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3.5 10.5v3a1 1 0 0 0 1 1h2l4 4v-13l-4 4h-2a1 1 0 0 0-1 1z"/>
+              <path d="M15 9.2a4 4 0 0 1 0 5.6"/>
+              <path d="M18 6.4a8 8 0 0 1 0 11.2"/>
+            </svg>
+          </div>
+          <h3>品牌广告</h3>
+          <ul>
+            <li>从创意概念到广告成片，快速完成视觉内容制作</li>
+            <li>同一创意可延展不同钩子、场景及版本，方便测试投放效果</li>
+            <li>适配主流短视频及社交媒体规格，满足多平台投放需求</li>
+          </ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== 产品优势 ======== -->
+  <section class="section adv-section" id="advantages">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="tag">产品优势</span>
+        <h2>更快、更省、更稳定的内容生产</h2>
+        <p>把重复性的拍摄与制作交给成熟的流程，让团队把精力放回创意与增长。</p>
+      </div>
+
+      <div class="grid-adv">
+        <div class="adv">
+          <span class="num">01</span>
+          <h3>降低制作成本</h3>
+          <p>减少传统拍摄对演员、模特、场地、摄影团队等环节的依赖，让更多预算回归内容与创意。</p>
+        </div>
+
+        <div class="adv">
+          <span class="num">02</span>
+          <h3>缩短制作周期</h3>
+          <p>打通策划、生成、制作与成片流程，大幅提升项目响应及交付速度。</p>
+        </div>
+
+        <div class="adv">
+          <span class="num">03</span>
+          <h3>提升成片品质</h3>
+          <p>结合先进 AI 视频模型与专业后期流程，兼顾画面表现、人物一致性与商业成片质感。</p>
+        </div>
+
+        <div class="adv">
+          <span class="num">04</span>
+          <h3>提升团队效率</h3>
+          <p>支持多人协作、项目管理、批量内容生产，让多项目并行更加高效。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ======== 页脚 ======== -->
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <div>© 2025 山风传媒 · 专业视频内容制作</div>
+    </div>
+    <button type="button" class="footer-link" data-open="contactModal">联系我们</button>
+  </div>
+</footer>
+
+<!-- ======== 联系我们弹窗 ======== -->
+<!-- ======== 联系我们弹窗 ======== -->
+<dialog id="contactModal" class="modal" aria-labelledby="contactTitle">
+  <div class="modal-head">
+    <h2 id="contactTitle">联系我们</h2>
+    <button type="button" class="modal-close" aria-label="关闭">×</button>
+  </div>
+
+  <div class="modal-body">
+    <div class="qr-wrap">
+      <div class="qr-box">
+        <img src="images/QR.jpg" alt="微信二维码">
+      </div>
+      <div class="qr-text">
+        <strong>北京山风和润传媒有限公司</strong>
+        <span>扫码添加商务微信<br>获取报价与样片案例</span>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<!-- ======== 登录弹窗 ======== -->
+<dialog id="loginModal" class="modal" aria-labelledby="loginTitle">
+  <div class="modal-head">
+    <h2 id="loginTitle">登录账户</h2>
+    <button type="button" class="modal-close" aria-label="关闭">×</button>
+  </div>
+
+  <div class="modal-body">
+    <form id="loginForm" autocomplete="off" novalidate>
+      <label class="field">
+        <span>账户</span>
+        <input type="text" name="account" placeholder="请输入账户或邮箱" autocomplete="username">
+      </label>
+
+      <label class="field">
+        <span>密码</span>
+        <input type="password" name="password" placeholder="请输入密码" autocomplete="current-password">
+      </label>
+
+      <button class="btn-submit" type="submit">登 录</button>
+
+      <p class="login-hint">还没有账户？<a href="#" data-switch-to-contact>联系我们注册</a></p>
+      <p class="login-note" id="loginNote" role="status"></p>
+    </form>
+  </div>
+</dialog>
+
+<script>
+  (function () {
+    var body = document.body;
+
+    /* ---------- 打开 / 关闭弹窗 ---------- */
+    function openModal(id) {
+      // 先关掉已打开的弹窗
+      document.querySelectorAll('dialog[open]').forEach(function (d) { d.close(); });
+      var dlg = document.getElementById(id);
+      if (dlg) {
+        dlg.showModal();
+        body.style.overflow = 'hidden';
+      }
+    }
+
+    document.querySelectorAll('[data-open]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        openModal(btn.getAttribute('data-open'));
+      });
+    });
+
+    document.querySelectorAll('dialog.modal').forEach(function (dlg) {
+      // 关闭按钮
+      var closeBtn = dlg.querySelector('.modal-close');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', function () { dlg.close(); });
+      }
+
+      // 点击遮罩区域关闭
+      dlg.addEventListener('click', function (e) {
+        if (e.target === dlg) dlg.close();
+      });
+
+      // 关闭弹窗后的操作
+      dlg.addEventListener('close', function () {
+        // 登录弹窗关闭时，清空表单与提示
+        if (dlg.id === 'loginModal') {
+          var loginForm = document.getElementById('loginForm');
+          if (loginForm) {
+            loginForm.reset();
+
+            var loginNote = document.getElementById('loginNote');
+            if (loginNote) {
+              loginNote.classList.remove('show');
+              loginNote.textContent = '';
+            }
+
+            // 如果按钮停在「登录中…」状态，也一并复位
+            var submitBtn = loginForm.querySelector('.btn-submit');
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = '登 录';
+            }
+          }
+        }
+        //恢复页面滚动
+        if (!document.querySelector('dialog[open]')) {
+          body.style.overflow = '';
+        }
+      });
+    });
+
+    /* ---------- 登录弹窗里的「联系我们注册」 ---------- */
+    document.querySelectorAll('[data-switch-to-contact]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        openModal('contactModal');
+      });
+    });
+
+    /* ---------- 登录 ---------- */
+    var form = document.getElementById('loginForm');
+    var note = document.getElementById('loginNote');
+    var btn  = form.querySelector('.btn-submit');
+    var originText = btn.textContent;
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var account  = form.account.value.trim();
+      var password = form.password.value.trim();
+
+      note.classList.remove('show');
+
+      if (!account || !password) {
+        note.textContent = '请填写账户与密码后再登录。';
+        note.classList.add('show');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = '登录中…';
+
+      setTimeout(function () {
+        btn.disabled = false;
+        btn.textContent = originText;
+        note.textContent = '用户名或密码不正确，如遇问题请「联系我们」处理。';
+        note.classList.add('show');
+      }, 700);
+    });
+  })();
+</script>
+
+</body>
+</html>
